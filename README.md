@@ -21,6 +21,6 @@ The current project has following scala trait or classes:
 2. RetailPromotionParser - Retail promotion parser to build AST Tree
 3. RetailPromotionEval - Evaluate AST tree at run time based on run time context.
 
-The AST tree for <b><I>“Promotion for Sku(Var(offer_skulist1),Var(offer_skulist1)),Category(Var(offe r_catlist)) discount Var(x_percetage) percentage”</I></b> will be <b><I>“Promotion(List(SKUVarRule(List(Var(offer_skulist1), Var(offer_skulist1))), CategoryVarRule(List(Var(offer_catlist)))),Promo(Var(x_percetage)))”</I></b>
+The AST tree for <b><I>“Promotion for Sku(Var(offer_skulist1),Var(offer_skulist1)),Category(Var(offe r_catlist)) discount Var(x_percetage) percentage”</I></b> will be <b><I>“Promotion(List(CategoryVarRule(VarList(List(Var(offer_skulist1), Var(offer_skulist1)))), CategoryVarRule(VarList(List(Var(offer_catlist))))),Promo(Var(x_percetage)))”</I></b>
 
 This is one of the sample for Retail DSL, this can extend for retail orders, retail loyalty offers, etc.
