@@ -12,7 +12,7 @@ import com.ast.dsl.functions.PromoFunctions
  */
  
 trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
-  
+
   //lexical delimiters
   lexical.delimiters ++= List("(", ")", ",")
   //lexical reserved keywords , this can extend based on use case
@@ -26,15 +26,21 @@ trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
   //repeat sku and category rule 
   def promo_rule = rep1sep((sku_rule | category_rule), ",") ^^ { case rules => rules }
 
-  def sku_rule = "Sku" ~ "(" ~> repsep(variable | ident, ",") <~ ")" ^^ {
-    case listOfSkus: List[String] => SKURule(listOfSkus)
-    case varlist: List[Var]       => SKUVarRule(varlist)
+  def sku_rule:Parser[Rule] = "Sku" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ {
+    case varlist: VarList       => CategoryVarRule(varlist)
+    case listOfCats: StringList => CategoryRule(listOfCats) 
   }
 
-  def category_rule = "Category" ~ "(" ~> repsep(variable | ident, ",") <~ ")" ^^ {
-    case listOfSkus: List[String] => CategoryRule(listOfSkus)
-    case varlist: List[Var]       => CategoryVarRule(varlist)
+  def category_rule:Parser[Rule] = "Category" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ {
+    case varlist: VarList       => CategoryVarRule(varlist)
+    case listOfCats: StringList => CategoryRule(listOfCats)
   }
+
+  //variable lexical rule
+  def variable_rule:Parser[VarList] = repsep(variable, ",") ^^ { case varlist => VarList(varlist) }
+
+  //either numeric or string literal lexical rule
+  def numer_string_list:Parser[StringList] = repsep(numericLit | stringLit, ",") ^^ { case listdata => StringList(listdata) }
 
   //parse discount and use combinator to get variable
   def discount_action = "discount" ~> variable <~ "percentage" ^^ { case n => Promo(n) }
