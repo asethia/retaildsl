@@ -7,20 +7,26 @@ package com.ast.dsl.functions
 trait PromoFunctions {
   //expression trait
   sealed abstract trait Expr
-  //rules
+  //rules 
   sealed abstract trait Rule extends Expr
+  //rules with variables
+  sealed abstract trait VarRule extends Rule
   //promotion case class
   case class Promotion(rules:List[Rule],promo:Promo)
   //promo case class
   case class Promo(v1:Var) extends Expr
   //variable case class 
-  case class Var(varname:String) extends Expr
-   //sku with list of variables
-  case class SKUVarRule(vl1:List[Var]) extends Rule
+  case class Var(varname:String) extends Expr 
+  //variable list
+  case class VarList(varList:List[Var]) extends Expr
+  //string list
+  case class StringList(stringList:List[String]) extends Expr
+  //sku with list of variables
+  case class SKUVarRule(list:VarList) extends VarRule
   //category with list of categories
-  case class CategoryVarRule(vl1:List[Var]) extends Rule
+  case class CategoryVarRule(list:VarList) extends VarRule
   //sku with list of sku names
-  case class SKURule(skuList:List[String]) extends Rule
+  case class SKURule(list:StringList) extends Rule
   //category with list of categories
-  case class CategoryRule(catList:List[String]) extends Rule
+  case class CategoryRule(list:StringList) extends Rule
 }
