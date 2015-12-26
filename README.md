@@ -13,7 +13,7 @@ As we see list of SKUs or categories and amount of discount varies in these prom
 1. This will allow to parse AST tree at once and eval at runt time based on defined various promotions. 
 2. This will also allow us to define user interface effectively to define such promotions. 
 
-The grammar of lexical parser can be extend further to accommodate various other keywords and functions. The current retail promotion grammar supports following keywords: "Promotion", "for", "Sku", "Category", "discount", "percentage", "Var"
+The grammar of lexical parser can be extend further to accommodate various other keywords and functions. The current retail promotion grammar supports following keywords: <b><I>"Promotion", "for", "Sku", "Category", "discount", "percentage", "Var" </I></b>
 
 The current project has following scala trait or classes:
 
@@ -21,6 +21,6 @@ The current project has following scala trait or classes:
 2. RetailPromotionParser - Retail promotion parser to build AST Tree
 3. RetailPromotionEval - Evaluate AST tree at run time based on run time context.
 
-The AST tree for “Promotion for Sku(Var(offer_skulist1),Var(offer_skulist1)),Category(Var(offe r_catlist)) discount Var(x_percetage) percentage” will be “Promotion(List(SKURule(List(Var(offer_skulist1), Var(offer_skulist1))), CategoryRule(List(Var(offer_catlist)))),Promo(Var(x_percetage)))”
+The AST tree for <b><I>“Promotion for Sku(Var(offer_skulist1),Var(offer_skulist1)),Category(Var(offe r_catlist)) discount Var(x_percetage) percentage”</I></b> will be <b><I>“Promotion(List(SKURule(List(Var(offer_skulist1), Var(offer_skulist1))), CategoryRule(List(Var(offer_catlist)))),Promo(Var(x_percetage)))”</I></b>
 
 This is one of the sample for Retail DSL, this can extend for retail orders, retail loyalty offers, etc.
