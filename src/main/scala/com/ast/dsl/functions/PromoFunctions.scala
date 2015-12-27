@@ -21,6 +21,6 @@ trait PromoFunctions {
   case class Var(varname: String) extends Expr
   //input list
   case class InputList[T](varList: List[T]) extends Expr
-  //sku with list of sku names  
+  //Rule for various rule types 
   case class Rule[T](ruleType: RuleFor.Value, list: InputList[T]) extends Expr
 }
