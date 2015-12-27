@@ -8,18 +8,16 @@ trait PromoFunctions {
   sealed abstract trait Expr
   //rules 
   sealed abstract trait Rule extends Expr
-  //rules with variables
-  sealed abstract trait VarRule extends Rule
   //promotion case class
-  case class Promotion(rules:List[Rule],promo:Promo)
+  case class Promotion(rules: List[Rule], promo: Promo)
   //promo case class
-  case class Promo(v1:Var) extends Expr
+  case class Promo(v1: Var) extends Expr
   //variable case class
-  case class Var(varname:String) extends Expr 
-  //input list type of T, this should not extend from expr
-  case class InputList[T](varList:List[T]) 
+  case class Var(varname: String) extends Expr
+  //input list
+  case class InputList[T](varList: List[T]) extends Expr
   //sku with list of sku names
-  case class SKURule[T](list:InputList[T]) extends Rule
+  case class SKURule[T](list: InputList[T]) extends Rule
   //category with list of categories
-  case class CategoryRule[T](list:InputList[T]) extends Rule
+  case class CategoryRule[T](list: InputList[T]) extends Rule
 }
