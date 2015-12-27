@@ -19,7 +19,7 @@ trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
   lexical.reserved += ("Promotion", "for", "Sku", "Category", "discount", "percentage", "Var")
 
   //root of grammar
-  def promo_expr: Parser[Any] = promo_spec ~> promo_rule ~ discount_action ^^ { case rules ~ award => Promotion(rules, award) }
+  def promo_expr: Parser[Promotion] = promo_spec ~> promo_rule ~ discount_action ^^ { case rules ~ award => Promotion(rules, award) }
 
   def promo_spec = "Promotion" ~ "for"
 
@@ -31,10 +31,10 @@ trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
   def category_rule:Parser[Rule] = "Category" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => CategoryRule(list)}
 
   //variable lexical rule
-  def variable_rule = repsep(variable, ",") ^^ { case varlist => InputList(varlist) }
+  def variable_rule = rep1sep(variable, ",") ^^ { case varlist => InputList(varlist) }
 
   //either numeric or string literal lexical rule
-  def numer_string_list = repsep(numericLit | stringLit, ",") ^^ { case listdata => InputList(listdata) }
+  def numer_string_list = rep1sep((stringLit | numericLit), ",") ^^ { case listdata => InputList(listdata) }
 
   //parse discount and use combinator to get variable
   def discount_action = "discount" ~> variable <~ "percentage" ^^ { case n => Promo(n) }
