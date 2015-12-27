@@ -15,6 +15,13 @@ object RetailDSLPromotionCLI extends RetailPromotionParser {
       case Failure(msg,_)=> println(msg)
       case Error(msg,_)=> println(msg)
     }
+    //having both numeric and string sku numbers and category with variable
+    parse("Promotion for Sku(33333,4444,'ssss'),Category(Var(offer_catlist)) discount Var(x_percetage) percentage") match {
+      case Success(result:Promotion,_)=> { println(result)
+      }
+      case Failure(msg,_)=> println(msg)
+      case Error(msg,_)=> println(msg)
+    }
     
   }
 
