@@ -2,6 +2,7 @@ package com.ast.dsl.parser
 
 import scala.util.parsing.combinator.syntactical._
 import com.ast.dsl.functions.PromoFunctions
+import com.ast.dsl.functions.RuleType
 
 /**
  * this is parser for retail promotion
@@ -26,9 +27,9 @@ trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
   //repeat sku and category rule 
   def promo_rule = rep1sep((sku_rule | category_rule), ",") ^^ { case rules => rules }
 
-  def sku_rule:Parser[Rule] = "Sku" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ {list => SKURule(list)}
-  
-  def category_rule:Parser[Rule] = "Category" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => CategoryRule(list)}
+  def sku_rule = "Sku" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => Rule(RuleType.SKU,list) }
+
+  def category_rule = "Category" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => Rule(RuleType.CATEGORY,list) }
 
   //variable lexical rule
   def variable_rule = rep1sep(variable, ",") ^^ { case varlist => InputList(varlist) }
@@ -37,7 +38,7 @@ trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
   def numer_string_list = rep1sep((stringLit | numericLit), ",") ^^ { case listdata => InputList(listdata) }
 
   //parse discount and use combinator to get variable
-  def discount_action = "discount" ~> variable <~ "percentage" ^^ { case n => Promo(n) }
+  def discount_action = "discount" ~> (variable) <~ "percentage" ^^ {case n=>Promo(n)}
 
   //variable parsing
   def variable = ("Var" ^^^ Var) ~ ("(" ~> ident <~ ")") ^^ { case v ~ n => v(n) }
