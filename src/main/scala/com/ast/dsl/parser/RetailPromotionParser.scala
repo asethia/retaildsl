@@ -2,7 +2,7 @@ package com.ast.dsl.parser
 
 import scala.util.parsing.combinator.syntactical._
 import com.ast.dsl.functions.PromoFunctions
-import com.ast.dsl.functions.RuleType
+import com.ast.dsl.functions.RuleFor
 
 /**
  * this is parser for retail promotion
@@ -27,9 +27,9 @@ trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
   //repeat sku and category rule 
   def promo_rule = rep1sep((sku_rule | category_rule), ",") ^^ { case rules => rules }
 
-  def sku_rule = "Sku" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => Rule(RuleType.SKU,list) }
+  def sku_rule = "Sku" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => Rule(RuleFor.SKU,list) }
 
-  def category_rule = "Category" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => Rule(RuleType.CATEGORY,list) }
+  def category_rule = "Category" ~ "(" ~> (variable_rule | numer_string_list) <~ ")" ^^ { list => Rule(RuleFor.CATEGORY,list) }
 
   //variable lexical rule
   def variable_rule = rep1sep(variable, ",") ^^ { case varlist => InputList(varlist) }
