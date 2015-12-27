@@ -1,23 +1,26 @@
 package com.ast.dsl.functions
 
 /**
+ * Enumeration for Rulefor
+ */
+object RuleFor extends Enumeration {
+  val CATEGORY, SKU = Value
+}
+
+/**
  * list of case classes used for retail promotion definition
  */
 trait PromoFunctions {
   //expression trait
   sealed abstract trait Expr
-  //rules 
-  sealed abstract trait Rule extends Expr
   //promotion case class
-  case class Promotion(rules: List[Rule], promo: Promo)
+  case class Promotion(rules: List[Rule[_]], promo: Promo)
   //promo case class
   case class Promo(v1: Var) extends Expr
   //variable case class
   case class Var(varname: String) extends Expr
   //input list
   case class InputList[T](varList: List[T]) extends Expr
-  //sku with list of sku names
-  case class SKURule[T](list: InputList[T]) extends Rule
-  //category with list of categories
-  case class CategoryRule[T](list: InputList[T]) extends Rule
+  //sku with list of sku names  
+  case class Rule[T](ruleType: RuleFor.Value, list: InputList[T]) extends Expr
 }
