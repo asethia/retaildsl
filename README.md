@@ -1,6 +1,6 @@
 <h1>Retail Promotion DSL</h1>
 
-This code demonstrate how to use Scala StandardTokenParsers with parser combinators. I would like to narrate my experience in designing an external DSL for a retail application using the parser combinator library of Scala.
+This code demonstrate how to use Scala StandardTokenParsers parser and combinators. I would like to narrate my experience in designing an external DSL for a retail application using the parser combinator library of Scala.
 
 Few sample DSLs (simplified for brevity) for accepting promotions defination from the business users to define promotion for SKUs or categories. 
 
