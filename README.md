@@ -38,7 +38,7 @@ The RetailPromotionEval will able to create a new Promotion based on run time dy
 <table>
 <thead>
  <tr>
-   <th align="left">Template<th>
+   <th align="left">Template</th>
    <th align="left">Promotion</th>
  </tr>
 </thead>
