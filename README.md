@@ -36,18 +36,22 @@ The RetailPromotionEval will able to create a new Promotion based on run time dy
 4. ("x_percetage",List("10"))
 
 <table>
+<thead>
  <tr>
-   <th align="right">Template<th>
-   <th align="right">Promotion</th>
+   <th align="left">Template<th>
+   <th align="left">Promotion</th>
  </tr>
+</thead>
+<tbody>
  <tr>
   <td>PromotionTemplate(List(Rule(SKU,InputList(List(Var(offer_skulist1), Var(offer_skulist2)))), Rule(CATEGORY,InputList(List(Var(offer_catlist1))))),Promo(Var(x_percetage)))</td>
   <td>Promotion(List(Rule(SKU,InputList(List(123, 456, 789, 123))), Rule(CATEGORY,InputList(List(abc, xyz)))),Promo(10))</td>
-</tr>
-<tr>
+ </tr>
+ <tr>
   <td>PromotionTemplate(List(Rule(SKU,InputList(List(33333, 4444, ssss))), Rule(CATEGORY,InputList(List(Var(offer_catlist1))))),Promo(Var(x_percetage)))</td>
   <td>Promotion(List(Rule(SKU,InputList(List(33333, 4444, ssss))), Rule(CATEGORY,InputList(List(abc, xyz)))),Promo(10))</td>
 </tr>
+</tbody>
 </table>
 
 This is one of the sample for Retail DSL, this can extend for retail orders, retail loyalty offers, etc.
