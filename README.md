@@ -23,9 +23,35 @@ The current project has following scala trait or classes:
 
 Few examples:
 
-1. The AST tree for <b><I>“Promotion for Sku(Var(offer_skulist1),Var(offer_skulist1)),Category(Var(offer_catlist)) discount Var(x_percetage) percentage”</I></b> will be <b><I>“Promotion(List(Rule(SKU,InputList(List(Var(offer_skulist1), Var(offer_skulist1)))), Rule(CATEGORY,InputList(List(Var(offer_catlist))))),Promo(Var(x_percetage)))”</I></b>
-2. The AST tree for <b><I>“Promotion for Sku(33333,4444,'ssss'),Category(Var(offer_catlist)) discount Var(x_percetage) percentage”</I></b> will be <b><I>“Promotion(List(Rule(SKU,InputList(List(33333, 4444, ssss))), Rule(CATEGORY,InputList(List(Var(offer_catlist))))),Promo(Var(x_percetage)))”</I></b>
+1. The AST tree for <b><I>“Promotion for Sku(Var(offer_skulist1),Var(offer_skulist2)),Category(Var(offer_catlist)) discount Var(x_percetage) percentage”</I></b> will be <b><I>“PromotionTemplate(List(Rule(SKU,InputList(List(Var(offer_skulist1), Var(offer_skulist2)))), Rule(CATEGORY,InputList(List(Var(offer_catlist1))))),Promo(Var(x_percetage)))”</I></b>
+2. The AST tree for <b><I>“Promotion for Sku(33333,4444,'ssss'),Category(Var(offer_catlist)) discount Var(x_percetage) percentage”</I></b> will be <b><I>“PromotionTemplate(List(Rule(SKU,InputList(List(33333, 4444, ssss))), Rule(CATEGORY,InputList(List(Var(offer_catlist1))))),Promo(Var(x_percetage)))”</I></b>
 
-Any node which is type of Var, means this node require run time value.
+Any node which is type of Var, means this node require run time value. PromotionTemplate indicates It is promotion template.
+
+The RetailPromotionEval will able to create a new Promotion based on run time dynamic value. For example for above templates if we have following run time values:
+
+1. ("offer_skulist1", List("123", "456"))
+2. ("offer_skulist2", List("789", "123"))
+3. ("offer_catlist1", List("abc", "xyz"))
+4. ("x_percetage",List("10"))
+
+<table>
+<thead>
+ <tr>
+   <th align="left">Template</th>
+   <th align="left">Promotion</th>
+ </tr>
+</thead>
+<tbody>
+ <tr>
+  <td>PromotionTemplate(List(Rule(SKU,InputList(List(Var(offer_skulist1), Var(offer_skulist2)))), Rule(CATEGORY,InputList(List(Var(offer_catlist1))))),Promo(Var(x_percetage)))</td>
+  <td>Promotion(List(Rule(SKU,InputList(List(123, 456, 789, 123))), Rule(CATEGORY,InputList(List(abc, xyz)))),Promo(10))</td>
+ </tr>
+ <tr>
+  <td>PromotionTemplate(List(Rule(SKU,InputList(List(33333, 4444, ssss))), Rule(CATEGORY,InputList(List(Var(offer_catlist1))))),Promo(Var(x_percetage)))</td>
+  <td>Promotion(List(Rule(SKU,InputList(List(33333, 4444, ssss))), Rule(CATEGORY,InputList(List(abc, xyz)))),Promo(10))</td>
+</tr>
+</tbody>
+</table>
 
 This is one of the sample for Retail DSL, this can extend for retail orders, retail loyalty offers, etc.

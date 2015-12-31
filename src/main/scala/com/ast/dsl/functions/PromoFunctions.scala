@@ -13,14 +13,16 @@ object RuleFor extends Enumeration {
 trait PromoFunctions {
   //expression trait
   sealed abstract trait Expr
+  //promotion template case class
+  case class PromotionTemplate(rules: List[Rule[_]], promo: Promo[_])
   //promotion case class
-  case class Promotion(rules: List[Rule[_]], promo: Promo)
+  case class Promotion(rules: List[Rule[_]], promo: Promo[_])
   //promo case class
-  case class Promo(v1: Var) extends Expr
+  case class Promo[T](value: T) extends Expr
   //variable case class
-  case class Var(varname: String) extends Expr
+  case class Var(varName: String) extends Expr
   //input list
   case class InputList[T](varList: List[T]) extends Expr
   //Rule for various rule types 
-  case class Rule[T](ruleType: RuleFor.Value, list: InputList[T]) extends Expr
+  case class Rule[T](ruleType: RuleFor.Value, inputList: InputList[T]) extends Expr
 }

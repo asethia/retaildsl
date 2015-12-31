@@ -20,7 +20,7 @@ trait RetailPromotionParser extends StandardTokenParsers with PromoFunctions {
   lexical.reserved += ("Promotion", "for", "Sku", "Category", "discount", "percentage", "Var")
 
   //root of grammar
-  def promo_expr: Parser[Promotion] = promo_spec ~> promo_rule ~ discount_action ^^ { case rules ~ award => Promotion(rules, award) }
+  def promo_expr: Parser[PromotionTemplate] = promo_spec ~> promo_rule ~ discount_action ^^ { case rules ~ award => PromotionTemplate(rules, award) }
 
   def promo_spec = "Promotion" ~ "for"
 
